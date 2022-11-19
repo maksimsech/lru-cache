@@ -9,7 +9,7 @@ public class LRUCache
     private Node? _lastNode = null;
 
 
-    public int Length { get; private set; } = 0;
+    public int Count => _map.Count;
 
 
     public LRUCache(int capacity)
@@ -44,31 +44,20 @@ public class LRUCache
         var node = new Node(key, value);
         _map[key] = node;
 
-        Length++;
         PushNodeToStart(node);
 
-        if (Length <= _capacity)
+        if (Count <= _capacity)
         {
             return;
         }
 
-        Length--;
-        _lastNode = _lastNode?.Previous;
-
-        if (_lastNode is null)
-        {
-            return;
-        }
-
-        _map.Remove(_lastNode.Next!.Key);
-
-        _lastNode.Next = null;
+        RemoveLastElement();
     }
 
 
     private void PushNodeToStart(Node node)
     {
-        if (_lastNode == node && _capacity > 1)
+        if (_lastNode == node)
         {
             _lastNode = node.Previous ?? _firstNode;
         }
@@ -116,6 +105,20 @@ public class LRUCache
 
         node.Previous = null;
         node.Next = null;
+    }
+
+    private void RemoveLastElement()
+    {
+        _lastNode = _lastNode?.Previous;
+
+        if (_lastNode is null)
+        {
+            return;
+        }
+
+        _map.Remove(_lastNode.Next!.Key);
+
+        _lastNode.Next = null;
     }
 
 
