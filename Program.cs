@@ -1,0 +1,15 @@
+﻿var lruCache = new LruCacheLeetCode.LRUCache(3);
+lruCache.Put(1,1);
+lruCache.Put(2,2);
+lruCache.Put(3,3);
+lruCache.Put(4,4);
+lruCache.Get(4);
+lruCache.Get(3);
+lruCache.Get(2);
+lruCache.Get(1);
+lruCache.Put(5,5);
+lruCache.Get(1);
+lruCache.Get(2);
+lruCache.Get(3);
+lruCache.Get(4);
+lruCache.Get(5);
